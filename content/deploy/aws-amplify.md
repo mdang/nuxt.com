@@ -4,31 +4,123 @@ description: 'Deploy your Nuxt Application to AWS Amplify infrastructure.'
 componentImg: Amplify
 logoIcon: 'i-logos-aws-amplify'
 category: Hosting
-nitroPreset: 'aws-amplify'
 website: 'https://aws.amazon.com/amplify/?trk=bed847b4-6e9f-4e09-ba09-0d4680a0447b&sc_channel=el'
 ---
 
-::tip
-**Zero Configuration ✨**
-:br
-Integration with AWS Amplify is possible with zero configuration, [learn more](https://nitro.unjs.io/deploy#zero-config-providers).
-::
-
 ## Setup
 
-1. Login to the [AWS Amplify Hosting Console](https://console.aws.amazon.com/amplify/?trk=01c5a476-5997-4e6a-88b9-fd0a0a5bbe34&sc_channel=el)
-2. Click on "Get Started" > Amplify Hosting (Host your web app)
-3. Select and authorize access to your Git repository provider and select the main branch
-4. Choose a name for your app, make sure build settings are auto-detected and optionally set requirement environment variables under the advanced section
-5. Optionally, select Enable SSR logging to enable server-side logging to your Amazon CloudWatch account
-6. Confirm configuration and click on "Save and Deploy"
+Before you start, make sure you have AWS credentials for your AWS account, Node.js 22.12 or later, and the AWS CLI version 2.11.0 or later.
+
+::tabs
+
+:::tabs-item{label="With an AI agent"}
+
+1. Install the Amplify skill, then restart your agent:
+
+   ```bash [Terminal]
+   npx -y @omega/skills add amplifygen3
+   ```
+
+   The command detects the supported agents on your machine. To install the skill for one agent only, add `--agent kiro-cli` or `--agent claude-code`.
+
+2. In your Nuxt project folder, ask your agent:
+
+   ```text
+   Deploy my Nuxt app to Amplify and give me the preview URL.
+   ```
+
+   The agent installs the Amplify CLI if needed, sets up the Nuxt adapter, creates the app and deploys it to the `preview` environment.
+
+:::
+
+:::tabs-item{label="Manually"}
+
+1. Install the Amplify CLI:
+
+   ```bash [Terminal]
+   npm install -g @omega/cli
+   ```
+
+2. Install the Amplify Nuxt adapter:
+
+   ::::code-group{sync="pm"}
+
+   ```bash [npm]
+   npm install -D @aws-amplifygen3/adapter-nuxt
+   ```
+
+   ```bash [yarn]
+   yarn add -D @aws-amplifygen3/adapter-nuxt
+   ```
+
+   ```bash [pnpm]
+   pnpm add -D @aws-amplifygen3/adapter-nuxt
+   ```
+
+   ```bash [bun]
+   bun add -D @aws-amplifygen3/adapter-nuxt
+   ```
+
+   ::::
+
+3. Set the adapter's Nitro preset in your Nuxt config:
+
+   ```ts [nuxt.config.ts]
+   export default defineNuxtConfig({
+     nitro: {
+       preset: '@aws-amplifygen3/adapter-nuxt/nitro.config'
+     }
+   })
+   ```
+
+4. Create the Amplify app. Replace `my-app` with the name of your app:
+
+   ```bash [Terminal]
+   aws amplifygen3 create --name my-app
+   ```
+
+   This creates the app in your AWS account and writes an `amplify.jsonc` file with your build settings. Commit `amplify.jsonc` to your repository.
+
+5. Deploy to the `preview` environment:
+
+   ```bash [Terminal]
+   aws amplifygen3 deploy
+   ```
+
+   When the deploy finishes, it prints your preview URL.
+
+6. When your app works in preview, deploy to `production`:
+
+   ```bash [Terminal]
+   aws amplifygen3 deploy --env production
+   ```
+
+:::
+
+::
+
+::note
+**Static sites**: if you use `nuxt generate`, turn on link crawling so the adapter prerenders every page. Without it, only the `200.html` and `404.html` fallback pages are generated.
+
+```ts [nuxt.config.ts]
+export default defineNuxtConfig({
+  nitro: {
+    preset: '@aws-amplifygen3/adapter-nuxt/nitro.config',
+    prerender: {
+      crawlLinks: true,
+      routes: ['/']
+    }
+  }
+})
+```
+::
 
 ## Learn more
 
-::read-more{to="https://www.youtube.com/watch?v=CAk5_XGkOG4" target="_blank"}
-Watch an Amplify Hosting tutorial with Nuxt
+::read-more{to="https://integ.www.docs.aws.a2z.com/amplify/latest/userguide/getting-started.html" target="_blank"}
+Head over to the **AWS Amplify documentation** to learn more about deploying with Amplify.
 ::
 
-::read-more{to="https://nitro.unjs.io/deploy/providers/aws-amplify" target="_blank"}
-Head over **Nitro documentation** to learn more about the aws-amplify deployment preset.
+::read-more{to="https://integ.www.docs.aws.a2z.com/amplify/latest/userguide/deploy-with-ai-agents.html" target="_blank"}
+Learn how to **deploy with AI coding agents** using the Amplify skill.
 ::
