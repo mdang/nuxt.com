@@ -9,7 +9,7 @@ website: 'https://aws.amazon.com/amplify/?trk=bed847b4-6e9f-4e09-ba09-0d4680a044
 
 ## Setup
 
-Before you start, make sure you have AWS credentials for your AWS account, Node.js 22.12 or later, and the AWS CLI version 2.11.0 or later.
+Before you start, make sure you have AWS credentials for your AWS account, [Node.js](https://nodejs.org/en/download) 22.12 or later, and the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) version 2.35.0 or later.
 
 ::tabs
 
@@ -18,10 +18,10 @@ Before you start, make sure you have AWS credentials for your AWS account, Node.
 1. Install the Amplify skill, then restart your agent:
 
    ```bash [Terminal]
-   npx -y @omega/skills add amplifygen3
+   aws agent-toolkit add-skill --skill-name aws-amplify
    ```
 
-   The command detects the supported agents on your machine. To install the skill for one agent only, add `--agent kiro-cli` or `--agent claude-code`.
+   The command is part of the AWS CLI and installs the skill for every supported agent it detects on your machine. To install it for one agent only, add `--agent kiro` or `--agent claude-code`.
 
 2. In your Nuxt project folder, ask your agent:
 
@@ -33,7 +33,7 @@ Before you start, make sure you have AWS credentials for your AWS account, Node.
 
 :::
 
-:::tabs-item{label="Manually"}
+:::tabs-item{label="Manual"}
 
 1. Install the Amplify CLI:
 
