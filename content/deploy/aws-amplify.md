@@ -114,7 +114,3 @@ export default defineNuxtConfig({
 ::read-more{to="https://integ.www.docs.aws.a2z.com/amplify/latest/userguide/getting-started.html" target="_blank"}
 Head over to the **AWS Amplify documentation** to learn more about deploying with Amplify.
 ::
-
-::read-more{to="https://integ.www.docs.aws.a2z.com/amplify/latest/userguide/deploy-with-ai-agents.html" target="_blank"}
-Learn how to **deploy with AI coding agents** using the Amplify skill.
-::
