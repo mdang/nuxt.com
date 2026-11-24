@@ -29,19 +29,13 @@ Before you start, make sure you have AWS credentials for your AWS account, [Node
    Deploy my Nuxt app to Amplify and give me the preview URL.
    ```
 
-   The agent installs the Amplify CLI if needed, sets up the Nuxt adapter, creates the app and deploys it to the `preview` environment.
+   The agent sets up the Nuxt adapter, creates the app and deploys it to the `preview` environment.
 
 :::
 
 :::tabs-item{label="Manual"}
 
-1. Install the Amplify CLI:
-
-   ```bash [Terminal]
-   npm install -g @omega/cli
-   ```
-
-2. Install the Amplify Nuxt adapter:
+1. Install the Amplify Nuxt adapter:
 
    ::::code-group{sync="pm"}
 
@@ -63,7 +57,7 @@ Before you start, make sure you have AWS credentials for your AWS account, [Node
 
    ::::
 
-3. Set the adapter's Nitro preset in your Nuxt config:
+2. Set the adapter's Nitro preset in your Nuxt config:
 
    ```ts [nuxt.config.ts]
    export default defineNuxtConfig({
@@ -73,7 +67,7 @@ Before you start, make sure you have AWS credentials for your AWS account, [Node
    })
    ```
 
-4. Create the Amplify app. Replace `my-app` with the name of your app:
+3. Create the Amplify app. Replace `my-app` with the name of your app:
 
    ```bash [Terminal]
    aws amplifygen3 create --name my-app
@@ -81,7 +75,7 @@ Before you start, make sure you have AWS credentials for your AWS account, [Node
 
    This creates the app in your AWS account and writes an `amplify.jsonc` file with your build settings. Commit `amplify.jsonc` to your repository.
 
-5. Deploy to the `preview` environment:
+4. Deploy to the `preview` environment:
 
    ```bash [Terminal]
    aws amplifygen3 deploy
@@ -89,7 +83,7 @@ Before you start, make sure you have AWS credentials for your AWS account, [Node
 
    When the deploy finishes, it prints your preview URL.
 
-6. When your app works in preview, deploy to `production`:
+5. When your app works in preview, deploy to `production`:
 
    ```bash [Terminal]
    aws amplifygen3 deploy --env production
